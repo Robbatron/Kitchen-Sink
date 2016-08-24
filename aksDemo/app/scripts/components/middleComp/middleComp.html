@@ -1,45 +1,46 @@
-<div class="row around-lg">
+<div class="row col-sm middle-md middle-lg">
     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
         <div class="row around-xs middle-xs">
-            <label>Postal Code*</label><input class="zipInput" type="text" name="zipCode"/>
+            <label>Postal Code*</label>
+            <input class="zipInput" type="text" name="zipCode" ng-value="$ctrl.aks.location.zipCode"/>
         </div>
         <div class="row around-xs middle-xs">
             <label>Year*</label>
-            <select>
-                <option value="2016">2016</option>
-                <option value="2017">2017</option>
+            <select ng-model="year" ng-options="x for (x, y) in $ctrl.aks.years[0]">
+                <option value="">-- select year --</option>
             </select>
         </div>
         <div class="row around-xs middle-xs">
             <label>Model*</label>
-            <select>
-                <option value="2016">Escalade</option>
+            <select ng-model="model" ng-options="x for (x, y) in $ctrl.aks.model">
+                <option value=""> -- select model -- </option>
             </select>
+
         </div>
         <div class="row around-xs middle-xs">
             <label>Configuration*</label>
-            <select>
-                <option value="RWD">RWD</option>
+            <select ng-model="config" ng-options="y.display for (x, y) in $ctrl.aks.config">
+                <option value=""> -- select config -- </option>
             </select>
         </div>
         <div class="row around-xs middle-xs">
             <label>Trim*</label>
-            <select>
-                <option value="3.6L V6 Twin Turbo">3.6L V6 Twin Turbo</option>
+            <select ng-model="trim" ng-options="y.display for (x, y) in $ctrl.aks.trim">
+                <option value=""> -- select trim -- </option>
             </select>
         </div>
     </div>
     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
         <div class="row center-xs">
-            <span>20XX Buick Verano Convenience Group</span>
+            <span>{{year.display}} Buick {{model.display}} Convenience Group</span>
         </div>
         <div class="row center-xs">
             <div class="imageXS">
-                <img ng-src="http://cgi.buick.com/mmgprod-us/dynres/prove/image.gen?i=2017/4V14526/4V14526__1SN/GAZ_gmds5&v=deg01&std=true&country=US" alt="buick" />
+                <img ng-src="{{model.extraInfo.seriesList[0].color.imageURL}}" alt="buick" />
             </div>
             <div class="msrp">
                 <span>Starting Price</span>
-                <span class="price">$XX,XXX @</span>
+                <span class="price">{{model.extraInfo.formattedPrice}}</span>
                 <span>Includes Destination</span>
                 <span>Freight Charge, A/C Tax</span>
             </div>

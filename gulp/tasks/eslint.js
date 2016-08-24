@@ -3,11 +3,11 @@
  */
 
 module.exports = function ( gulp, plugins, demoOrApp ) {
-    return function () {
-        gulp.src([
-            demoOrApp + 'scripts/**',
-            '!' + demoOrApp + 'scripts/**/*.html'
-        ]).pipe(plugins.eslint({
+        function eslinter() {
+            gulp.src([
+                demoOrApp + 'scripts/**',
+                '!' + demoOrApp + 'scripts/**/*.html'
+            ]).pipe(plugins.eslint({
                 'extends': ['eslint:recommended', 'plugin:jasmine/recommended'],
                 'plugins': ['angular', 'jasmine'],
                 'env': {
@@ -25,7 +25,8 @@ module.exports = function ( gulp, plugins, demoOrApp ) {
                     'inject' : false
                 }
             }))
-            .pipe(plugins.eslint.format())
-            .pipe(plugins.eslint.failOnError());
-    }
+                .pipe(plugins.eslint.format())
+                .pipe(plugins.eslint.failOnError());
+        }
+        return eslinter();
 };

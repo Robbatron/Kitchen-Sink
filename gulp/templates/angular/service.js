@@ -1,13 +1,19 @@
 function serviceName( apiService, coreValues ) {
-    var apiURL = coreValues.imageURI;
+    var apiURL = coreValues.pe;
 
-    var result = apiService.fetch('GET', apiURL)
+    var getResult = apiService.fetch('GET', apiURL)
         .then(function(result){
             return result;
         });
 
+    /*var postResult = apiService.fetch('POST', apiURL)
+        .then(function(result){
+            return result;
+        });*/
+
     return {
-        result : result
+        getResult : getResult
+        //postResult : postResult
     };
 }
 

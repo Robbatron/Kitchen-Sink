@@ -1,35 +1,38 @@
-
+var fs = require('fs');
 var gulp = require('gulp'),
 	browserSync = require('browser-sync').create(),
 	jsonServer = require('gulp-json-srv'),
 	plugins = require('gulp-load-plugins')({
 			camelize: true
 		}),
-	argv = require('yargs').argv;
+	http = require('http'),
+	argv = require('yargs').argv,
+	demoOrApp = '';
 
 	if(argv.go){
-		var demoOrApp = 'aksDemo/app/';
+		demoOrApp = 'aksDemo/app/';
 	} else {
-		var demoOrApp = 'app/';
+		demoOrApp = 'app/';
 	}
 
-
 	var scriptsDir = demoOrApp + 'scripts/',
-		arrayOfTasks = [ 'eslint', 'jsMin', 'sassToCss', 'injectCSSJS', 'unitTests' ];
+		dev = [ 'injectCSSJS', 'browser-sync' ],
+		build = [ 'eslint', 'jsMin', 'sassToCss', 'unitTests' ];
+
 
 
 function getTask(task) {
+	console.log('task name: ', task);
 	return require('./gulp/tasks/' + task)(gulp, plugins, demoOrApp, argv);
 }
 
-function serverStart(){
-	
+gulp.task('browser-sync', function() {
 	browserSync.init({
-		server : {
+		server: {
 			baseDir : './' + demoOrApp
 		},
 		reloadDebounce: 2000,
-		reloadDelay: 6000
+		reloadDelay: 9000
 	});
 
 	var reloadAPI = jsonServer.start({
@@ -42,51 +45,38 @@ function serverStart(){
 	});
 
 	gulp.watch([
-			scriptsDir + '**/*.spec.js',
-			scriptsDir + '**/*.js',
-			scriptsDir + '*.js',
-			scriptsDir + 'components/**/*.html',
-			demoOrApp + 'styles/*.scss',
-			demoOrApp + 'styles/**/*.scss',
-			demoOrApp + '*.html'
+			scriptsDir + '**/*.spec.js',
+			scriptsDir + '**/*.js',
+			scriptsDir + '*.js',
+			scriptsDir + 'components/**/*.html',
+			demoOrApp + 'styles/*.scss',
+			demoOrApp + 'styles/**/*.scss'
+			//demoOrApp + '*.html'
 		],
-		['jsMin', 'eslint', 'sassToCss', browserSync.reload]);
-}
+		['eslint', 'jsMin', 'sassToCss', browserSync.reload]);
 
-gulp.task('prod', arrayOfTasks, function (  ) {
-	
+});
+
+
+gulp.task('build', build, function (  ) {
 	console.log("Prod Started!");
 });
 
-gulp.task('dev', arrayOfTasks, function (  ) {
-	serverStart();
+gulp.task('dev', build.concat(dev), function (  ) {
 	console.log("Dev Started!");
 });
 
-gulp.task('demo', arrayOfTasks, function (  ) {
-	serverStart();
+gulp.task('demo', build.concat(dev), function (  ) {
 	console.log("Demo Started!");
 });
 
-gulp.task('help', getTask('help'));
-gulp.task('create', getTask('create'));
-gulp.task('unitTests', getTask('unitTests'));
-gulp.task('eslint', getTask('eslint'));
-gulp.task('jsMin', getTask('jsMin'));
-gulp.task('sassToCss', getTask('sassToCss'));
-gulp.task('injectCSSJS', getTask('injectCSSJS'));
-
-
-/*gulp.task('jsLibs', function(){
-	return gulp.src([
-			libsDir + 'angular/angular.min.js',
-			libsDir + 'angular-ui-router/release/angular-ui-router.min.js'
-		])
-		.pipe(concat('bundlejslibs.js'))
-		.pipe(gulp.dest('app/builds/dev/'));
-});*/
-
-gulp.task('default', ['create', 'dev'], function(){
-
-});
-
+gulp.task('admin', function() { return getTask('admin') }); // ES6 fat arrow would rock here
+gulp.task('version', function() { return getTask('version') });
+gulp.task('help', function() { return getTask('help') });
+gulp.task('create', function() { return getTask('create') });
+gulp.task('unitTests', function() { return getTask('unitTests') });
+gulp.task('eslint', function() { return getTask('eslint') });
+gulp.task('jsMin', function() { return getTask('jsMin') });
+gulp.task('sassToCss', function() { return getTask('sassToCss') });
+gulp.task('injectCSSJS', function() { return getTask('injectCSSJS') });
+gulp.task('default', [], function(){});

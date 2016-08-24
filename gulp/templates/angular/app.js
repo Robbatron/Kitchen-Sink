@@ -13,11 +13,15 @@ function angularBoot() {
     console.log('Angular Booting up!!!!');
 }
 
-function routes($stateProvider, $urlRouterProvider) {
+function routes($stateProvider, $urlRouterProvider, $locationProvider) {
+
+    $locationProvider.html5Mode({
+        enabled: true,
+        requireBase: false
+    });
+
     $urlRouterProvider.otherwise("/");
 
     $stateProvider
-        .state('index', {
-            url : ""
-        })/*add-state*/;
+        /*add-state*/;
 }

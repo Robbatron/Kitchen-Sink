@@ -1,19 +1,59 @@
 <!DOCTYPE html>
 <html>
 <head>
+
+	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
 	<title>The Kitchen Sink</title>
 	<!-- inject:css -->
-	<link rel="stylesheet" href="./builds/dev/bundlecss1.0.0.css">
+	<link rel="stylesheet" href="builds/bundlecss1.0.0.css">
 	<!-- endinject -->
+
 </head>
 <body>
 
-		<main-view class='container-fluid' ng-app='aks' ng-strict-di></main-view>
+
+<!--<div style="position:relative;width:1024px;margin:0 auto;">-->
+	<aks class='container-fluid' ng-app='aks' ng-strict-di></aks>
+<!--</div>-->
 
 		<!-- inject:js -->
-		<script src="./builds/dev/bundlejs1.0.0.js"></script>
+		<script src="builds/bundlejs1.js"></script>
 		<!-- endinject -->
+
+<script>
+	//document.querySelector('#blue')
+	function blue() {
+
+		document.querySelector('#box').className = 'row box bgColorBlue';
+		document.querySelector('#box1').className = 'row box bgColorBlue';
+		document.querySelector('#box2').className = 'row box bgColorBlue';
+		document.querySelector('#linka, #linka1').className = 'row height25 bgColorWhite';
+		document.querySelector('#linkb, #linka2').className = 'row height25 bgColorWhite'
+	}
+	function green() {
+		document.querySelector('#box').className = 'row box bgColorGreen';
+		document.querySelector('#box1').className = 'row box bgColorGreen';
+		document.querySelector('#box2').className = 'row box bgColorGreen';
+		document.querySelector('#linka, #linka1').className = 'row height25 bgColorWhite';
+		document.querySelector('#linkb, #linka2').className = 'row height25 bgColorWhite'
+	}
+	function grey() {
+		document.querySelector('#box').className = 'row box bgColorLightGrey';
+		document.querySelector('#box1').className = 'row box bgColorLightGrey';
+		document.querySelector('#box2').className = 'row box bgColorLightGrey';
+		document.querySelector('#linka, #linka1').className = 'row height25 bgColorBlue';
+		document.querySelector('#linkb, #linka2').className = 'row height25 bgColorWhite'
+	}
+	function red() {
+		document.querySelector('#box').className = 'row box bgColorRed';
+		document.querySelector('#box1').className = 'row box bgColorRed';
+		document.querySelector('#box2').className = 'row box bgColorRed';
+		document.querySelector('#linka, #linka1').className = 'row height25 bgColorBlue';
+		document.querySelector('#linkb, #linka2').className = 'row height25 bgColorWhite'
+	}
+</script>
 
 </body>
 </html>

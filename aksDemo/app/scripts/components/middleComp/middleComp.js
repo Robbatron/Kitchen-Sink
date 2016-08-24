@@ -1,12 +1,16 @@
 function MiddleCompCtrl() {
+
     this.$onInit = function(){
+
         console.log('Component middle comp initialized!');
+
     };
+
 }
 
 angular.module('aks').component('middleComp', {
     bindings: {
-        name : '@'
+        aks : '<'
     },
     controller : MiddleCompCtrl,
     templateUrl: "middleComp/middleComp.html"

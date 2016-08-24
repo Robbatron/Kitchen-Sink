@@ -4,13 +4,13 @@
 var fs = require('fs');
 
 module.exports = function ( gulp, plugins, demoOrApp ) {
-    return function () {
-        var karma = require('karma').Server,
-            path = require('path'),
-            appPath = __dirname + '/../../',
-            packageFile = JSON.parse(fs.readFileSync('package.json', 'utf8')),
-            appName = packageFile.name;
-        
+        function unitTest() {
+            var karma = require('karma').Server,
+                path = require('path'),
+                appPath = __dirname + '/../../',
+                packageFile = JSON.parse(fs.readFileSync('package.json', 'utf8')),
+                appName = packageFile.name;
+
             new karma({
                 configFile: '../../../karma.conf.js',
                 preprocessors: {
@@ -31,5 +31,6 @@ module.exports = function ( gulp, plugins, demoOrApp ) {
                 singleRun: false
 
             }).start();
-    }
+        }
+    return unitTest();
 };

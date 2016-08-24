@@ -2,16 +2,20 @@
  * Created by RZ3T64 on 6/11/2016.
  */
 
-    function MainViewCtrl() {
+    function MainCompCtrl() {
+
         this.$onInit = function(){
+
             console.log('Component main view initialized!');
         };
+
+
     }
-    angular.module('aks').component('mainView', {
+    angular.module('aks').component('mainComp', {
         bindings: {
-            name : '@'
+            aks : '<'
         },
-        controller : MainViewCtrl,
-        templateUrl: "mainView/mainView.html"
+        controller : MainCompCtrl,
+        templateUrl: "mainComp/mainComp.html"
     });
 
