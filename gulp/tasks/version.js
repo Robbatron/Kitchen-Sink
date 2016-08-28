@@ -9,9 +9,10 @@ var fs = require('fs'),
     http = require('http'),
     decision = require('./decision');
 
-function createFiles(gulp, plugins, argv, prodVersion){
-    parseVersion(gulp, plugins, argv, prodVersion, function() {
-        var args = Array.prototype.slice.call(arguments), i = 0;
+function createFiles(gulp, plugins, argv, prodVersion) {
+    parseVersion(gulp, plugins, argv, prodVersion, function () {
+        var args = Array.prototype.slice.call(arguments),
+            i = 0;
         for (; i < args.length; i++) {
             jsMin(gulp, plugins, 'app/', args[i]);
             sassToCss(gulp, plugins, 'app/', args[i]);
@@ -20,22 +21,7 @@ function createFiles(gulp, plugins, argv, prodVersion){
     });
 }
 
-// function minorFile(gulp, plugins, argv, prodVersion) {
-//     parseVersion(gulp, plugins, argv, prodVersion, function(newVersion) {
-//         jsMin(gulp, plugins,'app/', newVersion, 'minor');
-//         sassToCss(gulp, plugins, 'app/', newVersion, 'minor');
-//
-//     });
-// }
-//
-// function patchFile(gulp, plugins, argv, prodVersion) {
-//     parseVersion(gulp, plugins, argv, prodVersion, function(newVersion) {
-//         jsMin(gulp, plugins, 'app/', newVersion, 'patch');
-//         sassToCss(gulp, plugins, 'app/', newVersion, 'patch');
-//     });
-// }
-
-function parseVersion(gulp, plugins, argv, prod, cb ) {
+function parseVersion(gulp, plugins, argv, prod, cb) {
     var part = prod.split('.'),
         major = part[0],
         minor = part[1],
@@ -61,8 +47,6 @@ function parseVersion(gulp, plugins, argv, prod, cb ) {
     //     .pipe(gulp.dest('./'));
 
 
-
-
 }
 
 function getProdVersion(cb) {
@@ -71,29 +55,35 @@ function getProdVersion(cb) {
         path: '/v.json',
         port: 8080
     };
-    http.get(options, function(res) {
+    http.get(options, function (res) {
         res.setEncoding('utf8');
-        res.on('data', function(response) {
+        res.on('data', function (response) {
             cb((JSON.parse(response).version));
         });
-        res.on('error', function(e) {
+        res.on('error', function (e) {
             cb(e.message);
             console.log('ERROR: ' + e.message);
         });
     });
 }
 
-module.exports = function ( gulp, plugins, demoOrApp, argv) {
+module.exports = function (gulp, plugins, demoOrApp, argv) {
 
-    if ((typeof(argv.major) === 'number' && argv.major % 1 === 0) ||
-        (typeof(argv.minor) === 'number' && argv.minor % 1 === 0) ||
-        (typeof(argv.patch) === 'number' && argv.patch % 1 === 0)) {
-        getProdVersion(function(prodVersion) {
-            console.log("-------------------------");
+    /*
+    [argv.major, argv.minor, argv.patch].reduce(function(a) {
+        if (typeof(a) === 'number' && a % 1 === 0) {
+
+        }
+    };
+    */
+
+    if ((typeof (argv.major) === 'number' && argv.major % 1 === 0) ||
+        (typeof (argv.minor) === 'number' && argv.minor % 1 === 0) ||
+        (typeof (argv.patch) === 'number' && argv.patch % 1 === 0)) {
+        getProdVersion(function (prodVersion) {
             console.log("Prod version: ", prodVersion);
             console.log("Previous version: ", packageFile.previousVersion);
             console.log("Current version: ", packageFile.version);
-            console.log("-------------------------");
 
             createFiles(gulp, plugins, argv, prodVersion);
 
