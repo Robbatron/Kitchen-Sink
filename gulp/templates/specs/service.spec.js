@@ -1,7 +1,7 @@
 
 describe('Service : serviceName', function(){
 
-    var serviceName;
+    let serviceName;
 
     beforeEach(module('appName'));
 

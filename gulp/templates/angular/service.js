@@ -1,11 +1,11 @@
-function serviceName( apiService, coreValues ) {
-    var apiURL = coreValues.pe;
+function serviceName(apiService, coreValues) {
+    const apiURL = coreValues.pe;
 
-    var getResult = apiService.fetch('GET', apiURL)
-        .then(function(result){
-            return result;
-        });
-
+    const getResult = apiService.fetch('GET', apiURL)
+          .then(function(result){
+              return result;
+          });
+    
     /*var postResult = apiService.fetch('POST', apiURL)
         .then(function(result){
             return result;

@@ -8,7 +8,7 @@
 
             console.log('Component main view initialized!');
         };
-
+    
 
     }
     angular.module('aks').component('mainComp', {

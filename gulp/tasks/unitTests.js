@@ -1,15 +1,15 @@
-/**
- * Created by RZ3T64 on 6/23/2016.
- */
-var fs = require('fs');
+"use strict";
 
-module.exports = function ( gulp, plugins, demoOrApp ) {
-        function unitTest() {
-            var karma = require('karma').Server,
-                path = require('path'),
-                appPath = __dirname + '/../../',
-                packageFile = JSON.parse(fs.readFileSync('package.json', 'utf8')),
-                appName = packageFile.name;
+import fs from 'fs';
+
+module.exports = {
+    get(gulp, plugins, demoOrApp) {
+        const unitTest = () => {
+            const karma = require('karma').Server,
+                  path = require('path'),
+                  appPath = __dirname + '/../../',
+                  packageFile = JSON.parse(fs.readFileSync('package.json', 'utf8')),
+                  appName = packageFile.name;
 
             new karma({
                 configFile: '../../../karma.conf.js',
@@ -29,8 +29,8 @@ module.exports = function ( gulp, plugins, demoOrApp ) {
                     moduleName : appName
                 },
                 singleRun: false
-
             }).start();
-        }
-    return unitTest();
+        };
+        return unitTest();
+    }
 };

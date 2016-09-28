@@ -1,7 +1,7 @@
 
 describe('Filter : filterName', function(){
 
-    //var filterName;
+    //let filterName;
 
     beforeEach(module('appName'));
 

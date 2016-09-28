@@ -1,19 +1,12 @@
-/*
- *
- * @description
- * # DiSCO Tools Team
- *
- */
+"use strict";
 
 angular.module('appName', ['ui.router'])
     .run(angularBoot)
     .config(routes);
 
-function angularBoot() {
-    console.log('Angular Booting up!!!!');
-}
+const angularBoot = () => console.log('Angular Booting up!!!!');
 
-function routes($stateProvider, $urlRouterProvider, $locationProvider) {
+const routes = ($stateProvider, $urlRouterProvider, $locationProvider) => {
 
     $locationProvider.html5Mode({
         enabled: true,
@@ -24,4 +17,4 @@ function routes($stateProvider, $urlRouterProvider, $locationProvider) {
 
     $stateProvider
         /*add-state*/;
-}
+};

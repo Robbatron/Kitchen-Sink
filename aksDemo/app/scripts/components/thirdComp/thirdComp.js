@@ -1,7 +1,7 @@
 function ThirdCompCtrl() {
 
     this.$onInit = function(){
-
+        
         console.log('Component third comp initialized!');
     };
 }

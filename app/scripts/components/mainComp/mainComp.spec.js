@@ -1,9 +1,9 @@
 
-describe('Component : compName', function(){
+describe('Component : mainComp', function(){
 
-    let controller;
+    var controller;
 
-    beforeEach(module('appName'));
+    beforeEach(module('testProject'));
     beforeEach(module('ui.router'));
 
     describe('Controller data', function () {
@@ -11,7 +11,7 @@ describe('Component : compName', function(){
         beforeEach(inject(function($rootScope, $componentController){
 
             //scope = $rootScope.$new();
-            controller = $componentController('compName');
+            controller = $componentController('mainComp');
 
         }));
 

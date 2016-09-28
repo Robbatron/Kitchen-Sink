@@ -1,9 +1,8 @@
-/**
- * Created by RZ3T64 on 6/18/2016.
- */
+"use strict";
 
-module.exports = function ( gulp, plugins, demoOrApp ) {
-        function eslinter() {
+module.exports = {
+    get(gulp, plugins, demoOrApp) {
+        const eslinter = () => {
             gulp.src([
                 demoOrApp + 'scripts/**',
                 '!' + demoOrApp + 'scripts/**/*.html'
@@ -27,6 +26,7 @@ module.exports = function ( gulp, plugins, demoOrApp ) {
             }))
                 .pipe(plugins.eslint.format())
                 .pipe(plugins.eslint.failOnError());
-        }
+        };
         return eslinter();
+    }
 };

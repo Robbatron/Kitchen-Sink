@@ -1,19 +1,16 @@
-/**
- * Created by RZ3T64 on 6/24/2016.
- */
+"use strict";
 
-var fs = require('fs');
+import fs from 'fs';
 
-var components = 'app/scripts/components/',
-    services = 'app/scripts/services/',
-    constants = 'app/scripts/constants/',
-    filters = 'app/scripts/filters/',
-    app = 'app/scripts/',
-    packageFile = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+const components = 'app/scripts/components/',
+      services = 'app/scripts/services/',
+      constants = 'app/scripts/constants/',
+      filters = 'app/scripts/filters/',
+      app = 'app/scripts/',
+      packageFile = JSON.parse(fs.readFileSync('package.json', 'utf8')),
+      compName = (compName === true ? appName : compName);
 
 function stubsFile(gulp, plugins, appName, compName){
-
-    var compName = ( compName === true ? appName : compName);
 
     gulp.src(['gulp/templates/angular/stubComponent.js'])
         .pipe(plugins.replace('appName', appName))
@@ -37,9 +34,8 @@ function stubsFile(gulp, plugins, appName, compName){
 }
 
 function componentFile(gulp, plugins, appName, compName, truthy){
-    
-    var compName = ( compName === true ? appName : compName),
-        ctrlName = (compName.charAt(0).toUpperCase() + compName.slice(1)) + 'Ctrl';
+
+    const ctrlName = (compName.charAt(0).toUpperCase() + compName.slice(1)) + 'Ctrl';
         
     gulp.src(['package.json'])
         .pipe(plugins.replace(packageFile.name, appName))
@@ -63,7 +59,6 @@ function componentFile(gulp, plugins, appName, compName, truthy){
     gulp.src(['gulp/templates/angular/template.html'])
         .pipe(plugins.rename(compName + '.html'))
         .pipe(gulp.dest(components + compName + '/'));
-
 
     appFile(gulp, plugins, appName, compName, truthy);
 }
@@ -128,25 +123,24 @@ function appFile(gulp, plugins, appName, compName, truthy){
     var snakeCaseCompName = compName.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase(),
         addPath = function() { return truthy === true ? '' : compName.toLowerCase(); };
 
-    // Don't touch this. Spacing is correct.+ addPath() +
-    var addState = "\n        .state('" + compName.toLowerCase() + "', {\n" +
-        "            url : '/',\n" +
-        "            template : \'<" + snakeCaseCompName + "></" + snakeCaseCompName + ">\',\n " +
-        "           resolve : { \n" +
-        "               " + compName + " : function ( mainService ) {\n" +
-        "                    mainService.getResult.then(function(result) {\n" +
-        "                        return console.log(result.data);\n" +
-        "                    }, function(error){\n" +
-        "                        return console.log(error); \n" +
-        "                     });\n"+
-        "                    // mainService.postResult.then(function(result) {\n" +
-        "                    //     return console.log(result.data);\n" +
-        "                    // }, function(error){\n" +
-        "                    //    return console.log(error); \n" +
-        "                    // });\n"+
-        "               }\n"+
-        "            }\n"+
-        "        })/*add-state*/";
+    var addState = `.state("${compName.toLowerCase()}", {
+            url : "/",
+            template : "< ${snakeCaseCompName} ></ ${snakeCaseCompName} >",
+            resolve : { 
+               ${compName} : function ( mainService ) {
+                    mainService.getResult.then(function(result) {
+                        return console.log(result.data);
+                    }, function(error){
+                        return console.log(error); 
+                    });
+                    // mainService.postResult.then(function(result) {
+                    //     return console.log(result.data);
+                    // }, function(error){
+                    //    return console.log(error); 
+                    // });
+               }
+            }
+        })/*add-state*/`;
 
     var dir = truthy === true ? 'gulp/templates/angular/app.js' : 'app/scripts/app.js';
     
@@ -168,41 +162,32 @@ function newProject(gulp, plugins, appName){
     indexFile( gulp, plugins, appName );
 }
 
-function createType (gulp, plugins, argv ) {
+function createType (gulp, plugins, argv) {
 
-    var createType1 = {
-        project : function(){
-
-            newProject(gulp, plugins, argv.project);
-            
-            console.log( "result : ", argv.project );
-        },
-        filter : function(){
-            filterFile(gulp, plugins, packageFile.name, argv.filter);
-        },
-        constant : function(){
-            constantFile(gulp, plugins, packageFile.name, argv.constant);
-        },
-        service : function(){
-            serviceFile(gulp, plugins, packageFile.name, argv.service);
-        },
-        component : function(){
-            componentFile(gulp, plugins, packageFile.name, argv.component);
-        },
-        template : function(){
-            templateFile(gulp, plugins, packageFile.name, argv.template);
-        }
+    const createA = {
+          project() {
+              newProject(gulp, plugins, argv.project);
+              console.log("result:", argv.project);
+          },
+          filter() {
+              filterFile(gulp, plugins, packageFile.name, argv.filter);
+          },
+          constant() {
+              constantFile(gulp, plugins, packageFile.name, argv.constant);
+          },
+          service() {
+              serviceFile(gulp, plugins, packageFile.name, argv.service);
+          },
+          component() {
+              componentFile(gulp, plugins, packageFile.name, argv.component);
+          }
     };
 
-    return createType1[Object.keys(argv)[1]]();
+    return createA[Object.keys(argv)[1]]();
 }
 
 module.exports = {
-    get: function ( gulp, plugins, demoOrApp, argv) {
-
-        return function () {
-            createType(gulp, plugins, argv);
-        };
-
+    get(gulp, plugins, demoOrApp, argv) {
+        createType(gulp, plugins, argv);
     }
 };

@@ -5,7 +5,7 @@ function MiddleCompCtrl() {
         console.log('Component middle comp initialized!');
 
     };
-
+    
 }
 
 angular.module('aks').component('middleComp', {
